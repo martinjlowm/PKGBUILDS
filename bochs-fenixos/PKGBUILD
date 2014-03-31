@@ -1,5 +1,5 @@
 
-# PKGBUILD modified by martin-at-martinjlowm-gmail.com (Martin Madsen)
+# PKGBUILD modified by martin-at-martinjlowm.dk (Martin Madsen)
 # from bochs-gdbstub AUR PKG
 
 pkgname=bochs-fenixos
