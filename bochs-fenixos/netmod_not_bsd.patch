@@ -1,0 +1,11 @@
+--- config.h	2014-03-21 12:09:02.980031861 +0100
++++ config.h	2014-03-21 12:06:08.782755838 +0100
+@@ -830,7 +830,7 @@
+
+ // which networking modules will be enabled
+ // determined by configure script
+-#define BX_NETMOD_FBSD 1
++#define BX_NETMOD_FBSD 0
+ #define BX_NETMOD_LINUX 1
+ #define BX_NETMOD_WIN32   0
+ #define BX_NETMOD_TAP 1

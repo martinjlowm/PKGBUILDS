@@ -1,0 +1,58 @@
+
+# PKGBUILD modified by martin-at-martinjlowm-gmail.com (Martin Madsen)
+# from bochs-gdbstub AUR PKG
+
+pkgname=bochs-fenixos
+_pkgrealname=bochs
+pkgver=2.6.2
+pkgrel=1
+pkgdesc="A portable x86 PC emulation software package with gdbstub"
+arch=(i686 x86_64)
+license=('LGPL')
+url="http://bochs.sourceforge.net/"
+source=(http://downloads.sourceforge.net/project/${_pkgrealname}/${_pkgrealname}/${pkgver}/${_pkgrealname}-${pkgver}.tar.gz)
+md5sums=('82ecaff9826d4f29fa46f3062e2957b8')
+depends=('libxpm' 'gtk2')
+conflicts=('bochs')
+
+build() {
+	cd "${srcdir}/${_pkgrealname}-${pkgver}"
+        CC="gcc"
+        CXX="c++"
+        CFLAGS="-Wall -O3 -fomit-frame-pointer -pipe"    # for speed
+        #CFLAGS="-Wall -g -pipe"                         # for development
+        CXXFLAGS="$CFLAGS"
+	LIBS=-lpthread ./configure	\
+	  --prefix=/usr			\
+          --enable-cpu-level=6          \
+          --enable-x86-64               \
+          --enable-vmx=2                \
+          --enable-plugins              \
+          --enable-pci                  \
+          --enable-usb                  \
+          --enable-usb-ohci             \
+          --enable-usb-xhci             \
+          --enable-pnic                 \
+          --enable-e1000                \
+          --enable-ne2000               \
+          --enable-gdb-stub             \
+          --enable-disasm               \
+          --enable-iodebug              \
+          --enable-cdrom                \
+          --enable-show-ips             \
+          --enable-es1370               \
+          --enable-sb16                 \
+          --enable-clgd54xx             \
+          --enable-all-optimizations    \
+          --enable-gameport             \
+          --with-all-libs
+
+          patch -p1 config.h < ../../netmod_not_bsd.patch
+
+	make
+}
+
+package() {
+    cd "${srcdir}/${_pkgrealname}-${pkgver}"
+    make prefix=${pkgdir}/usr install
+}
